@@ -1,10 +1,37 @@
-import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {Link, useParams} from "react-router-dom";
+import axios from "axios";
+import {API_KEY, API_URL} from "../utils/conf";
 
 function MovieDetail() {
+  const {id} = useParams();
+  const [movie, setMovie] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(API_URL, {
+        params: {
+          apikey: API_KEY,
+          i: id
+        }
+      })
+      .then((response) => {
+        setMovie(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+
   return (<div>
     <Link to="/">Back to list</Link><br/>
 
-    Movie details
+    {!movie ? (<div>Fetching...</div>) : (
+      <div>
+        <span>{movie.Title}</span>
+      </div>
+    )}
   </div>);
 }
 
