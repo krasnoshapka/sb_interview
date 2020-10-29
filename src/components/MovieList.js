@@ -55,7 +55,7 @@ function MovieList() {
         <div>
           <div id='movies'>
             {movies && movies.Search.length > 0 && movies.Search.map((movie) => (
-                <MovieCard movie={movie} />
+                <MovieCard movie={movie} key={movie.imdbID} />
               )
             )
             }
