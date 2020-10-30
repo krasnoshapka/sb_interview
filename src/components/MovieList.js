@@ -8,8 +8,8 @@ function MovieList() {
   const location = useLocation();
   const queryURL = new URLSearchParams(location.search).get("query");
   const [query, setQuery] = useState(queryURL ?? '');
+  const page = (new URLSearchParams(location.search).get("page")) ?? 1;
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
   const [movies, setMovies] = useState(null);
 
   const fetchMovies = () => {
@@ -57,14 +57,20 @@ function MovieList() {
         <div>
           <div id='movies' className='container'>
             {movies && movies.Search.length > 0 && movies.Search.map((movie) => (
-                <MovieCard movie={movie} key={movie.imdbID} query={query} />
+                <MovieCard movie={movie} key={movie.imdbID} search={`?query=${query}&page=${page}`} />
               )
             )
             }
           </div>
           <div id='pagination'>
-            {movies && page > 1 && (<Link to='/' onClick={() => {setPage(page-1)}} >Previous page </Link>)}
-            {movies && (page + 1) <= Math.ceil(movies.totalResults / 10) && (<Link to='/' onClick={() => {setPage(page+1)}} > Next page</Link>)}
+            {movies && page > 1 && (<Link to={{
+              pathname: '/',
+              search: `?query=${query}&page=${+page-1}`
+            }} >Previous page </Link>)}
+            {movies && (page + 1) <= Math.ceil(movies.totalResults / 10) && (<Link to={{
+              pathname: '/',
+              search: `?query=${query}&page=${+page+1}`
+            }} > Next page</Link>)}
           </div>
         </div>
       )

@@ -27,7 +27,7 @@ function MovieDetail() {
   return (<div>
     <Link to={{
       pathname: `/`,
-      search : `?query=${new URLSearchParams(location.search).get("query")}`
+      search : location.search
     }}>Back to list</Link><br/>
 
     {!movie ? (<div>Fetching...</div>) : (
