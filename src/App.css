@@ -43,3 +43,8 @@ input {
         width: 100%;
     }
 }
+
+#pagination {
+    display: flex;
+    justify-content: space-between;
+}

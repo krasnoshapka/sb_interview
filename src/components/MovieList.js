@@ -62,8 +62,10 @@ function MovieList() {
             )
             }
           </div>
-          {movies && page > 1 && (<Link to='/' onClick={() => {setPage(page-1)}} >Previous page </Link>)}
-          {movies && (page + 1) <= Math.ceil(movies.totalResults / 10) && (<Link to='/' onClick={() => {setPage(page+1)}} > Next page</Link>)}
+          <div id='pagination'>
+            {movies && page > 1 && (<Link to='/' onClick={() => {setPage(page-1)}} >Previous page </Link>)}
+            {movies && (page + 1) <= Math.ceil(movies.totalResults / 10) && (<Link to='/' onClick={() => {setPage(page+1)}} > Next page</Link>)}
+          </div>
         </div>
       )
     }
