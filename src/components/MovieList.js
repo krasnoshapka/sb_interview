@@ -2,10 +2,12 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 import MovieCard from "./MovieCard";
 import {API_KEY, API_URL} from "../utils/conf";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 function MovieList() {
-  const [query, setQuery] = useState('');
+  const location = useLocation();
+  const queryURL = new URLSearchParams(location.search).get("query");
+  const [query, setQuery] = useState(queryURL ?? '');
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [movies, setMovies] = useState(null);
@@ -47,7 +49,7 @@ function MovieList() {
 
   return (<div>
     <form onSubmit={handleSubmit}>
-      <input type='input' name='search' id='search' placeholder='Enter movie name' onChange={handleChange} />
+      <input type='input' name='query' value={query} placeholder='Enter movie name' onChange={handleChange} />
       <input type="submit" value='Search' />
     </form>
     {
@@ -55,7 +57,7 @@ function MovieList() {
         <div>
           <div id='movies'>
             {movies && movies.Search.length > 0 && movies.Search.map((movie) => (
-                <MovieCard movie={movie} key={movie.imdbID} />
+                <MovieCard movie={movie} key={movie.imdbID} query={query} />
               )
             )
             }
