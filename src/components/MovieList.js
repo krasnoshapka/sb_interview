@@ -55,7 +55,7 @@ function MovieList() {
     {
       loading ? (<span>Loading...</span>) : (
         <div>
-          <div id='movies'>
+          <div id='movies' className='container'>
             {movies && movies.Search.length > 0 && movies.Search.map((movie) => (
                 <MovieCard movie={movie} key={movie.imdbID} query={query} />
               )
