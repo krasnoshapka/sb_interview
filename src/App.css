@@ -26,8 +26,20 @@ input {
     height: auto;
 }
 
+#detail {
+    padding: 10px;
+}
+
+#detail img {
+    float: left;
+    margin-right: 10px;
+}
+
 @media only screen and (max-width: 640px) {
     .item {
         flex-basis: 45%;
+    }
+    #detail img {
+        width: 100%;
     }
 }

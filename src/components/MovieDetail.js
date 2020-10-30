@@ -31,8 +31,12 @@ function MovieDetail() {
     }}>Back to list</Link><br/>
 
     {!movie ? (<div>Fetching...</div>) : (
-      <div>
-        <span>{movie.Title}</span>
+      <div id='detail'>
+        <h1>{movie.Title}</h1>
+        <img src={movie.Poster} alt={movie.Title} />
+        <p>Actors: {movie.Actors}</p>
+        <p>Rating: {movie.imdbRating}</p>
+        <p>Genre: {movie.Genre}</p>
       </div>
     )}
   </div>);
