@@ -5,13 +5,14 @@ import {fetchMovies} from "../utils/api";
 
 function MovieList() {
   const location = useLocation();
-  const queryURL = new URLSearchParams(location.search).get("query");
-  const [query, setQuery] = useState(queryURL ?? '');
+  const URLParams= new URLSearchParams(location.search);
+  const [query, setQuery] = useState(URLParams.get("query") ?? '');
+  const page = URLParams.get("page") ?? 1;
 
   const [loading, setLoading] = useState(false);
   const [movies, setMovies] = useState(null);
-  const page = (new URLSearchParams(location.search).get("page")) ?? 1;
 
+  console.log(query, page);
   useEffect(() => {
     if (query.length > 0) {
       setLoading(true);
@@ -39,7 +40,7 @@ function MovieList() {
     {
       loading ? (<span>Loading...</span>) : (
         <div>
-          <MovieCards movies={movies} query={query} page={page} />
+          <MovieCards movies={movies} search={`?query=${query}&page=${page}`} />
           <div id='pagination'>
             {movies && page > 1 && (<Link to={{
               pathname: '/',

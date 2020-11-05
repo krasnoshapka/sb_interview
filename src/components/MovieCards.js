@@ -1,11 +1,11 @@
 import MovieCard from "./MovieCard";
 
-function MovieCards({movies, query, page, ...props}) {
+function MovieCards({movies, search, ...props}) {
 
   return (
     <div id='movies' className='container'>
       {movies && movies.Search.length > 0 && movies.Search.map((movie) => (
-          <MovieCard movie={movie} key={movie.imdbID} search={`?query=${query}&page=${page}`} />
+          <MovieCard movie={movie} key={movie.imdbID} search={search} />
         )
       )
       }
