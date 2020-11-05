@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
-import MovieCard from "./MovieCard";
+import MovieCards from "./MovieCards";
 import {API_KEY, API_URL} from "../utils/conf";
 import {Link, useLocation} from "react-router-dom";
 
@@ -55,13 +55,7 @@ function MovieList() {
     {
       loading ? (<span>Loading...</span>) : (
         <div>
-          <div id='movies' className='container'>
-            {movies && movies.Search.length > 0 && movies.Search.map((movie) => (
-                <MovieCard movie={movie} key={movie.imdbID} search={`?query=${query}&page=${page}`} />
-              )
-            )
-            }
-          </div>
+          <MovieCards movies={movies} query={query} page={page} />
           <div id='pagination'>
             {movies && page > 1 && (<Link to={{
               pathname: '/',
