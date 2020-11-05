@@ -1,56 +1,40 @@
 import {useState, useEffect} from 'react';
-import axios from 'axios';
 import MovieCards from "./MovieCards";
-import {API_KEY, API_URL} from "../utils/conf";
 import {Link, useLocation} from "react-router-dom";
+import {fetchMovies} from "../utils/api";
 
 function MovieList() {
   const location = useLocation();
   const queryURL = new URLSearchParams(location.search).get("query");
   const [query, setQuery] = useState(queryURL ?? '');
-  const page = (new URLSearchParams(location.search).get("page")) ?? 1;
+
   const [loading, setLoading] = useState(false);
   const [movies, setMovies] = useState(null);
-
-  const fetchMovies = () => {
-    setLoading(true);
-    axios
-      .get(API_URL, {
-        params: {
-          apikey: API_KEY,
-          s: query,
-          page: page
-        }
-      })
-      .then((response) => {
-        const {Search, totalResults, Response} = response.data;
-        if (Response == 'True') {
-          setMovies({Search, totalResults});
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  const page = (new URLSearchParams(location.search).get("page")) ?? 1;
 
   useEffect(() => {
-    fetchMovies();
-  }, [page]);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    fetchMovies();
-  }
+    if (query.length > 0) {
+      setLoading(true);
+      fetchMovies(query, page)
+        .then((movies) => {
+          setMovies(movies);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setMovies(null);
+          setLoading(false);
+        })
+    }
+  }, [query, page]);
 
   const handleChange = (event) => {
     setQuery(event.target.value);
   }
 
   return (<div>
-    <form onSubmit={handleSubmit}>
-      <input type='input' name='query' value={query} placeholder='Enter movie name' onChange={handleChange} />
-      <input type="submit" value='Search' />
+    <form onSubmit={(event) => event.preventDefault()}>
+      <input type='input' name='query' value={query} onChange={handleChange} placeholder='Enter movie name' />
     </form>
     {
       loading ? (<span>Loading...</span>) : (

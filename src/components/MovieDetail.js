@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import {Link, useParams, useLocation} from "react-router-dom";
-import axios from "axios";
-import {API_KEY, API_URL} from "../utils/conf";
+import {fetchMovie} from "../utils/api";
 
 function MovieDetail() {
   const {id} = useParams();
@@ -9,15 +8,9 @@ function MovieDetail() {
   const [movie, setMovie] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(API_URL, {
-        params: {
-          apikey: API_KEY,
-          i: id
-        }
-      })
-      .then((response) => {
-        setMovie(response.data);
+    fetchMovie(id)
+      .then((movie) => {
+        setMovie(movie);
       })
       .catch((error) => {
         console.log(error);
