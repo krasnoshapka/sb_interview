@@ -12,7 +12,6 @@ function MovieList() {
   const [loading, setLoading] = useState(false);
   const [movies, setMovies] = useState(null);
 
-  console.log(query, page);
   useEffect(() => {
     if (query.length > 0) {
       setLoading(true);
